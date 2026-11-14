@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  user-select: none;
+}
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+  margin-left: 260px;
+}
