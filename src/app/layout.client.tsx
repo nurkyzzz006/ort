@@ -6,11 +6,7 @@ interface ILayout {
 }
 
 const LayoutClient: FC<ILayout> = ({ children }) => {
-  return (
-    <div>
-      <LayoutSite>{children}</LayoutSite>
-    </div>
-  );
+  return <div>{children}</div>;
 };
 
 export default LayoutClient;

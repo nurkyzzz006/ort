@@ -52,36 +52,36 @@ export const sideBarLinks = [
   {
     icon: <IoGridOutline />,
     label: "Кабинет",
-    href: "/",
+    href: "/dashboard/kabinet",
   },
   {
     icon: <FaRegFileLines />,
     label: "Тесттер",
-    href: "/",
+    href: "/dashboard/tester",
   },
   {
     icon: <FiTarget />,
     label: "Практика",
-    href: "/",
+    href: "/dashboard/practice",
   },
   {
     icon: <TbAlertTriangle />,
     label: "Каталар журналы",
-    href: "/",
+    href: "/dashboard/wrongs",
   },
   {
     icon: <LuRotateCw />,
     label: "Smart Review",
-    href: "/",
+    href: "/dashboard/smart",
   },
   {
     icon: <TbSparklesFilled />,
     label: "AI-мугалим",
-    href: "/",
+    href: "/dashboard/aiteacher",
   },
   {
     icon: <FiBarChart2 />,
     label: "Аналитика",
-    href: "/",
+    href: "/dashboard/analytics",
   },
 ];

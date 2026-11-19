@@ -33,7 +33,7 @@ const SideBar = () => {
           <div className={scss.menu}>
             <h4>БАШКАРУУ</h4>
 
-            <a className={scss.admin} href="/admin">
+            <a className={scss.admin} href="/dashboard/admin">
               <span className={scss.icon}>
                 <BiCheckShield />
               </span>

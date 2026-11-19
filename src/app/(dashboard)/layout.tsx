@@ -9,7 +9,7 @@ const layout: FC<ILayout> = ({ children }) => {
   return (
     <div>
       <SideBar />
-      {children}
+      <main>{children}</main>
     </div>
   );
 };
