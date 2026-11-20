@@ -1,32 +1,40 @@
-import type { UiLocale } from "@/settings/constants";
 
-// Форматирование выполняется только на клиенте (данные приходят из React Query
-// после монтирования), поэтому часовой пояс браузера не вызывает ошибок hydration.
+// Форматирование ДЕТЕРМИНИРОВАННОЕ — без Intl и без часового пояса машины:
+// сервер (Node, часто без данных локали ky-KG, TZ=UTC) и браузер дают одинаковую
+// строку, поэтому нет ошибок hydration, даже если компонент рендерится на сервере.
+// Даты показываются по времени Бишкека (UTC+6, без перехода на летнее время) —
+// это часовой пояс по умолчанию на бэкенде (Asia/Bishkek).
 
-const intlLocale = (locale: UiLocale) => (locale === "ru" ? "ru-RU" : "ky-KG");
+const BISHKEK_OFFSET_MS = 6 * 60 * 60 * 1000;
+const pad = (n: number) => String(n).padStart(2, "0");
 
-export const formatDate = (iso: string | null | undefined, locale: UiLocale) => {
+/** Части даты по времени Бишкека */
+const bishkekParts = (iso: string) => {
+  const time = new Date(iso).getTime();
+  if (Number.isNaN(time)) return null;
+  const d = new Date(time + BISHKEK_OFFSET_MS);
+  return { day: d.getUTCDate(), month: d.getUTCMonth() + 1, year: d.getUTCFullYear() };
+};
+
+/** "12.12.2026" — формат, привычный и в ky, и в ru */
+export const formatDate = (iso: string | null | undefined) => {
   if (!iso) return "—";
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "—";
-  return new Intl.DateTimeFormat(intlLocale(locale), {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
+  const p = bishkekParts(iso);
+  return p ? `${pad(p.day)}.${pad(p.month)}.${p.year}` : "—";
 };
 
-export const formatShortDate = (iso: string, locale: UiLocale) => {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "";
-  return new Intl.DateTimeFormat(intlLocale(locale), {
-    day: "2-digit",
-    month: "2-digit",
-  }).format(date);
+/** "12.12" — подписи на графиках */
+export const formatShortDate = (iso: string) => {
+  const p = bishkekParts(iso);
+  return p ? `${pad(p.day)}.${pad(p.month)}` : "";
 };
 
-export const formatNumber = (value: number, locale: UiLocale) =>
-  new Intl.NumberFormat(intlLocale(locale)).format(value);
+/** 1284 → "1 284" (неразрывный пробел, как в ky и ru) */
+export const formatNumber = (value: number) => {
+  const [int, frac] = String(Math.abs(value)).split(".");
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return `${value < 0 ? "−" : ""}${grouped}${frac ? `,${frac}` : ""}`;
+};
 
 /** 0.78 → "78%"; null → "—" (ТЗ 4.8: пустые данные — не «0%») */
 export const formatPercent = (ratio: number | null | undefined) =>

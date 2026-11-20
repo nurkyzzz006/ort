@@ -32,7 +32,6 @@ import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
 import { isOverdue, nowMs, secondsSince } from "@/i18n/time";
-import { useSettings } from "@/settings/SettingsProvider";
 import layout from "./layout.module.scss";
 import scss from "./Smart.module.scss";
 
@@ -173,11 +172,10 @@ const Smart = () => {
 
 const QueueDue = ({ iso }: { iso: string }) => {
   const t = useT();
-  const { locale } = useSettings();
   const overdue = isOverdue(iso);
   return (
     <small className={overdue ? scss.overdue : ""}>
-      {overdue ? `${t.review.overdue} · ${formatDate(iso, locale)}` : t.mistakes.today}
+      {overdue ? `${t.review.overdue} · ${formatDate(iso)}` : t.mistakes.today}
     </small>
   );
 };

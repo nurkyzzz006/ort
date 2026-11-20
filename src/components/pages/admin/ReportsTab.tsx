@@ -6,7 +6,6 @@ import Card from "@/components/ui/Card";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
 import roles from "../roles/roles.module.scss";
 import { JsonView, MutationStatus, str } from "./shared";
 import scss from "./admin.module.scss";
@@ -18,7 +17,6 @@ import scss from "./admin.module.scss";
  */
 const ReportsTab = () => {
   const t = useT();
-  const { locale } = useSettings();
   // Swagger знает только значение по умолчанию "open" — другие статусы не угадываем
   const status = "open";
   const reports = useGetQuestionReports({ status });
@@ -35,7 +33,7 @@ const ReportsTab = () => {
         <div className={roles.grow}>
           <strong>{kind ?? t.adm.report}</strong>
           <span>
-            {created && formatDate(created, locale)}
+            {created && formatDate(created)}
             {question && ` · ${question.slice(0, 8)}…`}
           </span>
           {comment ? <p className={scss.muted}>{comment}</p> : !kind && <JsonView value={r} />}

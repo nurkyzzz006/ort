@@ -1,7 +1,6 @@
 "use client";
 import { useState, type ReactNode } from "react";
 import { useT } from "@/i18n";
-import { ViewRoleProvider } from "@/roles/ViewRoleProvider";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import scss from "./Dashboard.module.scss";
@@ -13,7 +12,6 @@ const DashboardShell = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <ViewRoleProvider>
     <div className={scss.shell}>
       <a href="#main" className={scss.skip}>
         {t.common.skipToContent}
@@ -34,7 +32,6 @@ const DashboardShell = ({ children }: { children: ReactNode }) => {
         </main>
       </div>
     </div>
-    </ViewRoleProvider>
   );
 };
 

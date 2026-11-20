@@ -8,13 +8,11 @@ import LineChart, { type ChartPoint } from "@/components/ui/LineChart";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatShortDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
 import scss from "./widgets.module.scss";
 
 /** Траектория балла: пробники + цель + диапазон прогноза (ТЗ 4.8, 9.4) */
 const TrajectoryCard = () => {
   const t = useT();
-  const { locale } = useSettings();
   const trajectory = useGetScoreTrajectory();
 
   const content = () => {
@@ -28,7 +26,7 @@ const TrajectoryCard = () => {
     const points: ChartPoint[] = data.points
       .filter((p) => !useScaled || p.total_scaled !== null)
       .map((p) => ({
-        label: formatShortDate(p.taken_at, locale),
+        label: formatShortDate(p.taken_at),
         value: useScaled ? (p.total_scaled as number) : p.total_raw,
         muted: p.kind === "self_reported",
       }));

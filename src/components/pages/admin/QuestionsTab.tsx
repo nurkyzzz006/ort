@@ -18,7 +18,6 @@ import Card from "@/components/ui/Card";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
 import roles from "../roles/roles.module.scss";
 import layout from "../sidebar/layout.module.scss";
 import QuestionForm, { toCreateIn, toUpdateIn } from "./QuestionForm";
@@ -30,7 +29,6 @@ const PAGE = 20;
 /** Банк вопросов (ТЗ 7: Question Bank + workflow) */
 const QuestionsTab = () => {
   const t = useT();
-  const { locale } = useSettings();
   const [status, setStatus] = useState<QuestionStatus | "">("");
   const [language, setLanguage] = useState<Locale | "">("");
   const [offset, setOffset] = useState(0);
@@ -144,7 +142,7 @@ const QuestionsTab = () => {
                         <td>
                           <Badge tone={QUESTION_TONE[q.status]}>{t.adm.status[q.status]}</Badge>
                         </td>
-                        <td>{formatDate(q.created_at, locale)}</td>
+                        <td>{formatDate(q.created_at)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -185,7 +183,6 @@ const QuestionsTab = () => {
 /** Карточка вопроса: содержимое, переходы workflow, история, правка, новая версия */
 const QuestionDetail = ({ versionId, onOpenVersion }: { versionId: string; onOpenVersion: (id: string) => void }) => {
   const t = useT();
-  const { locale } = useSettings();
   const q = useGetQuestionVersion(versionId);
   const reviews = useGetQuestionReviews(versionId);
   const transition = useTransitionQuestion();
@@ -317,7 +314,7 @@ const QuestionDetail = ({ versionId, onOpenVersion }: { versionId: string; onOpe
                 <strong>
                   {r.from_status} → {r.to_status}
                 </strong>{" "}
-                · {formatDate(r.created_at, locale)}
+                · {formatDate(r.created_at)}
                 {r.comment && <p className={scss.muted}>{r.comment}</p>}
               </li>
             ))}

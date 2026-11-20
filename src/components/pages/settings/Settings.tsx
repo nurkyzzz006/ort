@@ -153,7 +153,6 @@ interface GoalForm {
 
 const GoalCard = () => {
   const t = useT();
-  const { locale } = useSettings();
   const goal = useGetGoal({ retry: false });
   const setGoal = useSetGoal();
   const archive = useArchiveGoal();
@@ -175,7 +174,7 @@ const GoalCard = () => {
       ) : (
         goal.data && (
           <p className={scss.note}>
-            {t.goal.current(goal.data.start_score, goal.data.target_score, formatDate(goal.data.exam_date, locale))}
+            {t.goal.current(goal.data.start_score, goal.data.target_score, formatDate(goal.data.exam_date))}
           </p>
         )
       )}

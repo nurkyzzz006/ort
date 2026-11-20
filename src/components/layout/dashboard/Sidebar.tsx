@@ -4,9 +4,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 import { useGetMistakes, useGetReviewQueue, useLogout, useSession } from "@/api";
 import { useT } from "@/i18n";
-import { ROLE_HOME, ROLE_NAV } from "@/roles/roles";
-import { useViewRole } from "@/roles/ViewRoleProvider";
 import Logo from "../common/Logo";
+import { ADMIN_NAV_ITEM, ADMIN_ROLES, DASHBOARD_NAV } from "../nav";
 import scss from "./Dashboard.module.scss";
 
 interface SidebarProps {
@@ -21,21 +20,21 @@ const Sidebar = ({ open, onNavigate }: SidebarProps) => {
   const t = useT();
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated } = useSession();
-  const { role } = useViewRole();
+  const { isAuthenticated, hasRole } = useSession();
   const logout = useLogout();
-  const nav = ROLE_NAV[role];
+  // ТЗ 9.4: админ-панель в меню только по роли бэкенда; права проверяет сервер
+  const showAdmin = hasRole(...ADMIN_ROLES);
+  const nav = DASHBOARD_NAV;
 
-  // Активен самый конкретный пункт (/dashboard/teacher/homework, а не /dashboard/teacher)
-  const activeHref = [...nav.map((i) => i.href), "/dashboard/settings"]
+  // Активен самый конкретный пункт
+  const activeHref = [...nav.map((i) => i.href), ADMIN_NAV_ITEM.href, "/dashboard/settings"]
     .filter((href) => matches(pathname, href))
     .sort((a, b) => b.length - a.length)[0];
   const isActive = (href: string) => href === activeHref;
 
-  // Счётчики в меню ученика — реальные данные: активные ошибки и карточки на сегодня
-  const studentView = isAuthenticated && role === "student";
-  const mistakes = useGetMistakes({ limit: 1 }, { enabled: studentView });
-  const review = useGetReviewQueue({ enabled: studentView });
+  // Счётчики в меню — реальные данные: активные ошибки и карточки на сегодня
+  const mistakes = useGetMistakes({ limit: 1 }, { enabled: isAuthenticated });
+  const review = useGetReviewQueue({ enabled: isAuthenticated });
   const counters = { mistakes: mistakes.data?.total, review: review.data?.due };
 
   const onLogout = () =>
@@ -44,11 +43,11 @@ const Sidebar = ({ open, onNavigate }: SidebarProps) => {
   return (
     <aside className={[scss.sidebar, open ? scss.sidebarOpen : ""].join(" ")} aria-label={t.nav.main}>
       <div className={scss.sidebarLogo}>
-        <Logo href={ROLE_HOME[role]} subtitle={t.brand.long} inverted />
+        <Logo href="/dashboard/kabinet" subtitle={t.brand.long} inverted />
       </div>
 
       <nav className={scss.menu}>
-        <p className={scss.menuTitle}>{t.roles.section[role]}</p>
+        <p className={scss.menuTitle}>{t.nav.sectionLearning}</p>
         {nav.map((item) => {
           const active = isActive(item.href);
           const count = item.counter ? counters[item.counter] : undefined;
@@ -78,6 +77,17 @@ const Sidebar = ({ open, onNavigate }: SidebarProps) => {
           </span>
           <span className={scss.menuLabel}>{t.nav.settings}</span>
         </Link>
+        {showAdmin && (
+          <Link
+            href={ADMIN_NAV_ITEM.href}
+            onClick={onNavigate}
+            className={isActive(ADMIN_NAV_ITEM.href) ? scss.active : ""}
+            aria-current={isActive(ADMIN_NAV_ITEM.href) ? "page" : undefined}
+          >
+            <span className={scss.menuIcon}>{ADMIN_NAV_ITEM.icon}</span>
+            <span className={scss.menuLabel}>{t.nav.items.admin}</span>
+          </Link>
+        )}
       </nav>
 
       <button

@@ -187,7 +187,7 @@ const SessionsTable = () => {
               {sessions.data.map((s) => (
                 <tr key={s.id}>
                   <td className={scss.testName}>{pickTitle(s, locale)}</td>
-                  <td>{formatDate(s.started_at, locale)}</td>
+                  <td>{formatDate(s.started_at)}</td>
                   <td>
                     {s.raw_score != null ? `${s.raw_score} / ${s.max_score ?? "—"}` : "—"}
                     {s.scaled_score != null && (

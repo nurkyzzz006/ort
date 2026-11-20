@@ -10,7 +10,6 @@ import { ProgressBar, toneByRatio } from "@/components/ui/Progress";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { pickTitle, useT } from "@/i18n";
 import { toRatio } from "@/i18n/format";
-import { useViewRole } from "@/roles/ViewRoleProvider";
 import { useSettings } from "@/settings/SettingsProvider";
 import { useOpenPractice } from "../sidebar/actions";
 import scss from "./roles.module.scss";
@@ -19,7 +18,6 @@ import scss from "./roles.module.scss";
 const Subjects = () => {
   const t = useT();
   const { locale } = useSettings();
-  const { role } = useViewRole();
   const subjects = useGetSubjects();
   const [selected, setSelected] = useState<string | null>(null);
   const active = selected ?? subjects.data?.[0]?.id;
@@ -58,7 +56,7 @@ const Subjects = () => {
               </li>
             ))}
           </ul>
-          {active && <TopicsTree subjectId={active} allowPractice={role === "student"} />}
+          {active && <TopicsTree subjectId={active} allowPractice />}
         </>
       )}
     </>

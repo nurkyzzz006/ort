@@ -7,7 +7,6 @@ import Card from "@/components/ui/Card";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
 import roles from "../roles/roles.module.scss";
 import { MutationStatus } from "./shared";
 import scss from "./admin.module.scss";
@@ -18,7 +17,6 @@ const PAGE = 50;
 /** Пользователи и роли (ТЗ 2.1: роли назначает только администратор, всё в audit log) */
 const UsersTab = () => {
   const t = useT();
-  const { locale } = useSettings();
   const [offset, setOffset] = useState(0);
   const users = useGetAdminUsers({ limit: PAGE, offset });
 
@@ -36,7 +34,7 @@ const UsersTab = () => {
             <table className={roles.table}>
               <thead>
                 <tr>
-                  <th>{t.teacher.student}</th>
+                  <th>{t.adm.user}</th>
                   <th>{t.mistakes.columns.status}</th>
                   <th>{t.adm.roles}</th>
                   <th>{t.tests.columns.date}</th>
@@ -44,7 +42,7 @@ const UsersTab = () => {
               </thead>
               <tbody>
                 {users.data.items.map((u) => (
-                  <UserRow key={u.id} user={u} createdAt={formatDate(u.created_at, locale)} />
+                  <UserRow key={u.id} user={u} createdAt={formatDate(u.created_at)} />
                 ))}
               </tbody>
             </table>

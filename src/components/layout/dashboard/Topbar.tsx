@@ -5,9 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { LuCalendar, LuFlame, LuLogOut, LuMenu, LuSettings } from "react-icons/lu";
 import { useGetGoal, useGetStatsOverview, useLogout, useSession } from "@/api";
 import { useT } from "@/i18n";
-import { useViewRole } from "@/roles/ViewRoleProvider";
 import LanguageSwitch from "../common/LanguageSwitch";
-import RoleSwitch from "./RoleSwitch";
 import ThemeSwitch from "../common/ThemeSwitch";
 import commonScss from "../common/common.module.scss";
 import scss from "./Dashboard.module.scss";
@@ -26,11 +24,8 @@ const Topbar = ({ onMenu }: TopbarProps) => {
   const t = useT();
   const router = useRouter();
   const { user, isAuthenticated } = useSession();
-  const { role } = useViewRole();
-  // Серия и цель — данные ученика
-  const studentView = isAuthenticated && role === "student";
-  const overview = useGetStatsOverview(undefined, { enabled: studentView });
-  const goal = useGetGoal({ enabled: studentView });
+  const overview = useGetStatsOverview(undefined, { enabled: isAuthenticated });
+  const goal = useGetGoal({ enabled: isAuthenticated });
   const logout = useLogout();
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,7 +55,7 @@ const Topbar = ({ onMenu }: TopbarProps) => {
       </button>
 
       <div className={scss.topbarInfo}>
-        {!studentView ? null : goal.data ? (
+        {!isAuthenticated ? null : goal.data ? (
           <Link href="/dashboard/analytics" className={scss.goalChip}>
             <LuCalendar aria-hidden />
             {t.topbar.daysLeft(goal.data.days_left)} · {t.topbar.target} {goal.data.target_score}
@@ -77,9 +72,8 @@ const Topbar = ({ onMenu }: TopbarProps) => {
       </div>
 
       <div className={scss.topbarActions}>
-        <RoleSwitch />
         <LanguageSwitch />
-        {studentView && streak !== undefined && (
+        {streak !== undefined && (
           <span className={scss.streak} title={t.topbar.streakTitle}>
             <LuFlame aria-hidden /> {t.common.days(streak)}
           </span>

@@ -11,7 +11,6 @@ import DemoNotice, { useL } from "@/demo/DemoNotice";
 import { studentHomework, type HomeworkStatus } from "@/demo/data";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
 import layout from "../sidebar/layout.module.scss";
 import scss from "./roles.module.scss";
 
@@ -28,7 +27,6 @@ type Filter = "all" | "active" | "done";
 const Homework = () => {
   const t = useT();
   const l = useL();
-  const { locale } = useSettings();
   const [filter, setFilter] = useState<Filter>("active");
 
   const list = studentHomework.filter((h) =>
@@ -74,7 +72,7 @@ const Homework = () => {
               <p className={scss.muted}>{t.homework.teacher}: {h.teacher}</p>
               <p className={scss.meta}>
                 <span>
-                  <LuCalendar aria-hidden /> {formatDate(h.due, locale)}
+                  <LuCalendar aria-hidden /> {formatDate(h.due)}
                 </span>
                 <span>
                   <LuFileText aria-hidden /> {t.common.questions(h.questions)}

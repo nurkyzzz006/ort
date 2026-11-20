@@ -247,38 +247,6 @@
   gap: 10px;
 }
 
-.roleSwitch {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 42px;
-  padding: 0 4px 0 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text-muted);
-
-  select {
-    height: 100%;
-    max-width: 150px;
-    padding: 0 6px;
-    border: none;
-    background: transparent;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  &:focus-within {
-    box-shadow: var(--focus-ring);
-  }
-}
-
 .streak {
   display: none;
   align-items: center;
@@ -305,10 +273,6 @@
 
   .topbarActions {
     gap: 6px;
-  }
-
-  .roleSwitch select {
-    max-width: 86px;
   }
 }
 

@@ -101,7 +101,7 @@ const Kabinet = () => {
           icon={<LuCheck />}
           tone="success"
           label={t.stats.solved}
-          value={o ? formatNumber(o.solved, locale) : "—"}
+          value={o ? formatNumber(o.solved) : "—"}
           hint={o ? t.stats.inDays(o.period_days) : undefined}
           loading={overview.isPending}
         />
@@ -150,7 +150,7 @@ const Kabinet = () => {
                 <div className={scss.lastHead}>
                   <div>
                     <p className={scss.lastTitle}>{pickTitle(lastFinished, locale)}</p>
-                    <p className={layout.muted}>{formatDate(lastFinished.submitted_at, locale)}</p>
+                    <p className={layout.muted}>{formatDate(lastFinished.submitted_at)}</p>
                   </div>
                   <p className={scss.score}>
                     {lastFinished.raw_score ?? "—"}

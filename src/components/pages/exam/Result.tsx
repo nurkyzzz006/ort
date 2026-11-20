@@ -38,7 +38,7 @@ const Result = ({ sessionId }: { sessionId: string }) => {
     <>
       <PageHeader
         title={t.result.title}
-        subtitle={`${r.test_code} · ${formatDate(r.submitted_at, locale)} · ${formatClock(r.duration_sec)}`}
+        subtitle={`${r.test_code} · ${formatDate(r.submitted_at)} · ${formatClock(r.duration_sec)}`}
         actions={
           <>
             <Button href="/dashboard/tester" variant="secondary">

@@ -31,7 +31,6 @@ const PERIODS = [7, 30, 90];
 /** Аналитика (макет: стр. 9; ТЗ 4.8, 4.11, 4.12) */
 const Analitics = () => {
   const t = useT();
-  const { locale } = useSettings();
   const [period, setPeriod] = useState(30);
   const overview = useGetStatsOverview({ period_days: period });
   const o = overview.data;
@@ -70,7 +69,7 @@ const Analitics = () => {
             icon={<LuCheck />}
             tone="success"
             label={t.stats.solved}
-            value={o ? formatNumber(o.solved, locale) : "—"}
+            value={o ? formatNumber(o.solved) : "—"}
             hint={o ? t.analytics.activeDays(o.active_days) : undefined}
             loading={overview.isPending}
           />
@@ -159,7 +158,6 @@ const RoiCard = () => {
 /** Прогресс к цели: разрыв, веха, реалистичность (ТЗ 4.11) */
 const GoalProgressCard = () => {
   const t = useT();
-  const { locale } = useSettings();
   const progress = useGetGoalProgress({ retry: false });
 
   if (progress.isPending) return <Skeleton height={180} />;
@@ -216,7 +214,7 @@ const GoalProgressCard = () => {
       <div className={layout.row}>
         <span>{t.goal.examDate}</span>
         <strong>
-          {formatDate(g.exam_date, locale)} · {t.topbar.daysLeft(g.days_left)}
+          {formatDate(g.exam_date)} · {t.topbar.daysLeft(g.days_left)}
         </strong>
       </div>
       <div className={layout.row}>
@@ -234,7 +232,6 @@ const GoalProgressCard = () => {
 /** Награды за освоенные навыки и вехи (ТЗ 4.15) */
 const AchievementsCard = () => {
   const t = useT();
-  const { locale } = useSettings();
   const achievements = useGetAchievements();
   if (achievements.isError || !achievements.data?.length) return null;
 
@@ -248,7 +245,7 @@ const AchievementsCard = () => {
             </span>
             <div>
               <strong>{a.code}</strong>
-              <span>{formatDate(a.earned_at, locale)}</span>
+              <span>{formatDate(a.earned_at)}</span>
             </div>
           </li>
         ))}

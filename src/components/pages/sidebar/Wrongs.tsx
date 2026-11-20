@@ -26,7 +26,7 @@ import StatCard from "@/components/ui/StatCard";
 import { Empty, ErrorState, Skeleton } from "@/components/ui/StateView";
 import { useT } from "@/i18n";
 import { formatDate } from "@/i18n/format";
-import { useSettings } from "@/settings/SettingsProvider";
+import { isDueToday } from "@/i18n/time";
 import layout from "./layout.module.scss";
 import scss from "./Wrongs.module.scss";
 
@@ -256,12 +256,9 @@ const Wrongs = () => {
 
 const DueDate = ({ iso }: { iso: string | null }) => {
   const t = useT();
-  const { locale } = useSettings();
   if (!iso) return <>—</>;
-  const due = new Date(iso);
-  const today = new Date();
-  const sameDay = due.toDateString() === today.toDateString();
-  return <>{sameDay || due < today ? t.mistakes.today : formatDate(iso, locale)}</>;
+  // «Сегодня» или раньше — по тому же времени Бишкека, что и formatDate
+  return <>{isDueToday(iso) ? t.mistakes.today : formatDate(iso)}</>;
 };
 
 /** Карточка ошибки: ответы, решение, причина (ТЗ 4.6), архив */

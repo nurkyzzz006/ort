@@ -11,8 +11,6 @@ import DemoNotice, { useL } from "@/demo/DemoNotice";
 import { olympiads, type OlympiadLevel, type OlympiadStatus } from "@/demo/data";
 import { useT } from "@/i18n";
 import { formatDate, formatNumber } from "@/i18n/format";
-import { useViewRole } from "@/roles/ViewRoleProvider";
-import { useSettings } from "@/settings/SettingsProvider";
 import layout from "../sidebar/layout.module.scss";
 import scss from "./roles.module.scss";
 
@@ -35,8 +33,6 @@ type Filter = "all" | OlympiadStatus;
 const Olympiads = () => {
   const t = useT();
   const l = useL();
-  const { locale } = useSettings();
-  const { role } = useViewRole();
   const [filter, setFilter] = useState<Filter>("all");
   // Регистрация — локальное состояние демо, до появления POST /olympiads/{id}/register
   const [registered, setRegistered] = useState<string[]>([]);
@@ -44,7 +40,6 @@ const Olympiads = () => {
 
   const list = olympiads.filter((o) => filter === "all" || o.status === filter);
   const finished = olympiads.filter((o) => o.myResult);
-  const canRegister = role === "student";
 
   const toggle = (setter: typeof setRegistered, id: string) =>
     setter((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
@@ -94,7 +89,7 @@ const Olympiads = () => {
                 <p className={scss.muted}>{l(o.subject)}</p>
                 <p className={scss.meta}>
                   <span>
-                    <LuCalendar aria-hidden /> {formatDate(o.date, locale)}
+                    <LuCalendar aria-hidden /> {formatDate(o.date)}
                   </span>
                   <span>
                     {o.format === "online" ? <LuWifi aria-hidden /> : <LuMapPin aria-hidden />}{" "}
@@ -102,14 +97,14 @@ const Olympiads = () => {
                   </span>
                   {o.participants > 0 && (
                     <span>
-                      <LuUsers aria-hidden /> {formatNumber(o.participants, locale)}
+                      <LuUsers aria-hidden /> {formatNumber(o.participants)}
                     </span>
                   )}
                 </p>
 
                 {o.status === "open" && (
                   <p className={scss.muted}>
-                    {t.olympiads.registrationUntil}: {formatDate(o.registrationUntil, locale)}
+                    {t.olympiads.registrationUntil}: {formatDate(o.registrationUntil)}
                   </p>
                 )}
 
@@ -117,7 +112,7 @@ const Olympiads = () => {
                   <p className={scss.strong}>
                     {t.olympiads.result(o.myResult.place, o.myResult.score, o.myResult.max)}
                   </p>
-                ) : o.status === "open" && canRegister ? (
+                ) : o.status === "open" ? (
                   <Button
                     fullWidth
                     variant={isRegistered ? "secondary" : "primary"}
