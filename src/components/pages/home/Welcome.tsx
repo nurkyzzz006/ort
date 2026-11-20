@@ -1,99 +1,93 @@
+"use client";
+import { LuArrowRight, LuCheck, LuFlame, LuPlay, LuShieldCheck } from "react-icons/lu";
+import Button from "@/components/ui/Button";
+import { Ring } from "@/components/ui/Progress";
+import { useT } from "@/i18n";
 import scss from "./Welcome.module.scss";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { IoPlayOutline } from "react-icons/io5";
 
+/** Первый экран лендинга (макет: ORTO-screens, стр. 1) */
 const Welcome = () => {
+  const t = useT();
+  const h = t.landing.hero;
+
   return (
-    <div id={scss.Welcome}>
-      <div className="container">
-        <div className={scss.content}>
-          <div className={scss.content_text}>
-            <p>ЖРТ/ОРТ 2027- кыргызча жана орусча</p>
-            <h1>
-              ЖРТ/ОРТго <span>акылдуу</span> даярдануу
-            </h1>
-            <p>
-              Тест жон гана балл бербейт. Ар бир катаныз
-              тандалып,тушундурулуп,туура убакта кайталоого кирет - ошентип
-              билим бекемделет.
-            </p>
-            <div className={scss.btns}>
-              <button>
-                Диагностикадан отуу <FaArrowRightLong />
-              </button>
-              <button>
-                {" "}
-                <IoPlayOutline /> Демо тест
-              </button>
-            </div>
-            <div className={scss.numbers}>
-              <p>
-                {" "}
-                500+
-                <br />
-                <span> текшерилген суроо</span>
-              </p>
-              <p>
-                1.3.7.14.30
-                <br />
-                <span> кайталоо кундору</span>
-              </p>
-              <p>
-                2 тил <br />
-                <span>кыргызча / орусча</span>
-              </p>
+    <section className={scss.hero}>
+      <div className={`container ${scss.content}`}>
+        <div className={scss.text}>
+          <p className={scss.eyebrow}>
+            <span aria-hidden />
+            {h.eyebrow}
+          </p>
+          <h1>
+            {h.titleStart} <span className={scss.accent}>{h.titleAccent}</span> {h.titleEnd}
+          </h1>
+          <p className={scss.lead}>{h.lead}</p>
+
+          <div className={scss.buttons}>
+            <Button href="/dashboard/tester?kind=diagnostic" size="lg" iconRight={<LuArrowRight />}>
+              {h.primaryCta}
+            </Button>
+            <Button href="/dashboard/tester?kind=mini" size="lg" variant="secondary" icon={<LuPlay />}>
+              {h.secondaryCta}
+            </Button>
+          </div>
+
+          <dl className={scss.facts}>
+            {h.facts.map((f) => (
+              <div key={f.value}>
+                <dt>{f.value}</dt>
+                <dd>{f.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Иллюстрация продукта — статичная демонстрация интерфейса */}
+        <div className={scss.preview} aria-hidden>
+          <div className={scss.previewTop}>
+            <span className={scss.streak}>
+              <LuFlame /> {h.preview.streak}
+            </span>
+            <span className={scss.saved}>{h.preview.saved}</span>
+          </div>
+
+          <div className={scss.plan}>
+            <Ring value={0.68} size={64}>
+              <strong className={scss.ringText}>68%</strong>
+            </Ring>
+            <div>
+              <p className={scss.planTitle}>{h.preview.planTitle}</p>
+              <p className={scss.planText}>{h.preview.planText}</p>
             </div>
           </div>
 
-          <div className={scss.content_pin}>
-            <div className={scss.day}>
-              <p>12 күн</p>
-              <p>Сакталды</p>
-            </div>
+          <p className={scss.qMeta}>{h.preview.questionMeta}</p>
+          <p className={scss.qText}>
+            {h.preview.question} <code>x² − 5x + 6 = 0</code>
+          </p>
 
-            <div className={scss.plan}>
-              <button className={scss.progress}>
-                <span>68%</span>
-              </button>
+          <ul className={scss.options}>
+            <li>
+              <b>A</b> x₁ = 1, x₂ = 6
+            </li>
+            <li className={scss.correct}>
+              <b>
+                <LuCheck />
+              </b>
+              x₁ = 2, x₂ = 3
+            </li>
+            <li>
+              <b>C</b> x₁ = −2, x₂ = −3
+            </li>
+          </ul>
 
-              <div className={scss.report}>
-                <p>Бүгүнкү план</p>
-                <p>3/5 тапшырма аткарылды</p>
-              </div>
-            </div>
-
-            <h6>7-СУРОО — МАТЕМАТИКА</h6>
-
-            <div className={scss.question}>
-              <p className={scss.question_title}>Теңдемени чыгар:</p>
-
-              <p className={scss.equation}>x - 2 - 9 = 0</p>
-
-              <div className={scss.answers}>
-                <label className={scss.correct}>
-                  <input type="radio" name="answer" value="11" defaultChecked />
-                  <span>A)</span>
-                  <span>11</span>
-                  <span className={scss.status}>✓</span>
-                </label>
-
-                <label className={scss.option}>
-                  <input type="radio" name="answer" value="7" />
-                  <span>Б)</span>
-                  <span>7</span>
-                </label>
-
-                <label className={scss.option}>
-                  <input type="radio" name="answer" value="9" />
-                  <span>В)</span>
-                  <span>9</span>
-                </label>
-              </div>
-            </div>
-          </div>
+          <span className={scss.verified}>
+            <LuShieldCheck /> {h.preview.verified}
+          </span>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
+
 export default Welcome;

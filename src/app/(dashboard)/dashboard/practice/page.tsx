@@ -1,6 +1,11 @@
-import Practice from '@/components/pages/sidebar/Practice';
-import React from 'react';
+import Practice from "@/components/pages/sidebar/Practice";
+import React, { Suspense } from "react";
 
-const page = () =><Practice/>
+// Practice читает ?session= из URL (useSearchParams) → нужна Suspense-граница
+const page = () => (
+  <Suspense>
+    <Practice />
+  </Suspense>
+);
 
 export default page;

@@ -1,0 +1,204 @@
+@use "../../../../styles/mixins" as *;
+
+.overline {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.muted {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.error {
+  margin: 8px 0;
+  font-size: 13px;
+  color: var(--danger-text);
+}
+
+.estimated {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--warning-text);
+}
+
+// ── Прогноз ──
+.prediction,
+.predictionEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.predictionEmpty p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 280px;
+}
+
+.ringValue {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.range {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--text-muted);
+
+  strong {
+    color: var(--text);
+    font-weight: 800;
+  }
+}
+
+// ── Траектория ──
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+
+  span::before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 3px;
+    margin-right: 6px;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+}
+
+.legendLine::before {
+  background: var(--primary);
+}
+
+.legendTarget::before {
+  background: repeating-linear-gradient(90deg, var(--success) 0 5px, transparent 5px 9px);
+}
+
+.legendBand::before {
+  height: 10px !important;
+  background: var(--primary-soft-2);
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin-top: 16px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  strong {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+  }
+}
+
+.positive {
+  color: var(--success-text) !important;
+}
+
+.negative {
+  color: var(--danger-text) !important;
+}
+
+// ── Навыки ──
+.list {
+  display: grid;
+  gap: 14px;
+}
+
+.skillList {
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px;
+    align-items: center;
+    gap: 6px 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    > div {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    strong {
+      text-align: right;
+      font-weight: 800;
+    }
+
+    @include up($bp-md) {
+      grid-template-columns: minmax(140px, 1.1fr) minmax(0, 2fr) 52px 90px;
+
+      > div {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+  }
+}
+
+.skillName {
+  font-weight: 600;
+  @include truncate;
+}
+
+.skillMeta {
+  display: none;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-faint);
+
+  @include up($bp-md) {
+    display: block;
+  }
+}
+
+// ── Слабая тема ──
+.weakTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--warning-text);
+  margin-bottom: 10px;
+}
+
+.weakSkill {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.weakButton {
+  margin-top: 16px;
+}

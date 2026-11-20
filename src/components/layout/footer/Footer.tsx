@@ -1,28 +1,35 @@
-import Image from "next/image";
+"use client";
+import Link from "next/link";
+import { useT } from "@/i18n";
 import scss from "./Footer.module.scss";
-import logo from "@/assets/logo_ort.svg";
-import { footerLinks } from "@/components/ui/Language";
+
+const LINKS = [
+  { key: "privacy", href: "/privacy" },
+  { key: "terms", href: "/terms" },
+  { key: "telegram", href: "/dashboard/settings#telegram" },
+] as const;
+
 const Footer = () => {
+  const t = useT();
   return (
-    <div id={scss.Footer}>
-      <div className="container">
-        <div className={scss.content}>
-          <div className={scss.logo}>
-            <Image src={logo} alt="Logo" width={40} height={40} />
-            <div className={scss.logo_name}>
-              <p> 2026 - Кыргыз Республикасы</p>
-            </div>
-          </div>
-          <div className={scss.help}>
-            {footerLinks.map((link, index) => (
-              <a key={index} href={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </div>
+    <footer className={scss.footer}>
+      <div className={`container ${scss.content}`}>
+        <div className={scss.brand}>
+          <span className={scss.mark} aria-hidden>
+            <span />
+          </span>
+          <p>© 2026 · {t.footer.country}</p>
         </div>
+        <nav className={scss.links} aria-label={t.footer.title}>
+          {LINKS.map((l) => (
+            <Link key={l.key} href={l.href}>
+              {t.footer[l.key]}
+            </Link>
+          ))}
+        </nav>
       </div>
-    </div>
+    </footer>
   );
 };
+
 export default Footer;

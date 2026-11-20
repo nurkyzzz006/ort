@@ -1,239 +1,99 @@
+@use "../../../styles/mixins" as *;
 
-#Platform {
-  width: 100%;
-  padding: 90px 0;
-  background: #f7f8ff;
+.section {
+  padding: 64px 0 72px;
+  background: var(--bg);
+  scroll-margin-top: 72px;
+}
 
-  .content {
-    text-align: start;
+.title {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
 
-    > h1 {
-      margin-bottom: 15px;
-      color: #171b3d;
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
+.lead {
+  margin-top: 12px;
+  max-width: 560px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
 
-    > p {
-      max-width: 650px;
-      margin-bottom: 45px;
-      color: #777b96;
-      font-size: 16px;
-      line-height: 1.7;
-    }
+.grid {
+  list-style: none;
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .cards {
-    display: grid;
+  @include up($bp-lg) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .card {
-    padding: 28px;
-    background: #ffffff;
-    border: 1px solid #e8e7f5;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(31, 35, 80, 0.06);
-    transition: 0.3s;
-
-    &:hover {
-      transform: translateY(-5px);
-      border-color: #c9c2f5;
-      box-shadow: 0 14px 32px rgba(54, 43, 120, 0.12);
-    }
-
-    .icon {
-      display: block;
-      width: 23px;
-      height: 23px;
-      margin-bottom: 20px;
-      color: #5545b9;
-      stroke-width: 1.8;
-   
-      
-   
-    }
-
-    h2 {
-      margin-bottom: 13px;
-      color: #202044;
-      font-size: 20px;
-      font-weight: 750;
-      line-height: 1.4;
-    }
-
-    p {
-      color: #77768a;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-  }
-
-  .free {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 35px;
-    margin-top: 50px;
-    padding: 42px 45px;
-    border-radius: 22px;
-
-    background: linear-gradient(
-      120deg,
-      #171b49 0%,
-      #6640d7 52%,
-      #7650c9 100%
-    );
-
-    box-shadow: 0 15px 35px rgba(43, 54, 130, 0.18);
-
-    .text {
-      max-width: 650px;
-
-      h1 {
-        margin-bottom: 13px;
-        color: #ffffff;
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1.35;
-      }
-
-      p {
-        color: rgba(255, 255, 255, 0.88);
-        font-size: 15px;
-        line-height: 1.7;
-      }
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-shrink: 0;
-      padding: 15px 23px;
-      color: #25205c;
-      background: #ffffff;
-      border: 1px solid #ffffff;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.3s;
-
-      svg {
-        font-size: 17px;
-      }
-
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(15, 20, 60, 0.2);
-      }
-    }
   }
 }
 
-/* Планшет */
-@media (max-width: 992px) {
-  #Platform {
-    padding: 75px 0;
+.card {
+  @include card;
+  padding: 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-    .cards {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
 
-    .free {
-      padding: 35px;
-      gap: 25px;
+  h3 {
+    margin: 16px 0 8px;
+    font-size: 16px;
+    font-weight: 800;
+  }
 
-      .text h1 {
-        font-size: 25px;
-      }
-    }
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
   }
 }
 
-/* Телефон */
-@media (max-width: 576px) {
-  #Platform {
-    padding: 60px 0;
-
-    .content {
-      > h1 {
-        font-size: 30px;
-      }
-
-      > p {
-        margin-bottom: 30px;
-        font-size: 14px;
-      }
-    }
-
-    .cards {
-      grid-template-columns: 1fr;
-      gap: 17px;
-    }
-
-    .card {
-      padding: 24px;
-
-      .icon {
-        width: 21px;
-        height: 21px;
-        margin-bottom: 17px;
-      }
-
-      h2 {
-        font-size: 18px;
-      }
-    }
-
-    .free {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 25px;
-      margin-top: 35px;
-      padding: 28px 23px;
-      border-radius: 18px;
-
-      .text {
-        h1 {
-          font-size: 23px;
-        }
-
-        p {
-          font-size: 14px;
-        }
-      }
-
-      button {
-        width: 100%;
-        padding: 14px 18px;
-      }
-    }
-  }
+.icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 18px;
 }
 
-/* Маленький телефон */
-@media (max-width: 380px) {
-  #Platform {
-    .content > h1 {
-      font-size: 27px;
-    }
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 56px;
+  padding: 28px 24px;
+  border-radius: var(--radius-xl);
+  background: var(--gradient-cta);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
 
-    .card {
-      padding: 20px;
-    }
+  @include up($bp-md) {
+    padding: 40px;
+  }
 
-    .free {
-      padding: 23px 18px;
+  h2 {
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
 
-      .text h1 {
-        font-size: 21px;
-      }
-    }
+  p {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
   }
 }

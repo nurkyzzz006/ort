@@ -1,0 +1,56 @@
+.chart {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.axis {
+  fill: var(--text-faint);
+  font-size: 11px;
+}
+
+.target {
+  stroke: var(--success);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+}
+
+.band {
+  fill: var(--primary-soft-2);
+}
+
+.line {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.areaStart {
+  stop-color: var(--primary);
+  stop-opacity: 0.18;
+}
+
+.areaEnd {
+  stop-color: var(--primary);
+  stop-opacity: 0;
+}
+
+.dot {
+  fill: var(--surface);
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
+.dotMuted {
+  fill: var(--surface);
+  stroke: var(--text-faint);
+  stroke-width: 2;
+  stroke-dasharray: 3 2;
+}

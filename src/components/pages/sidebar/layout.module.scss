@@ -1,0 +1,87 @@
+@use "../../../styles/mixins" as *;
+
+// Общие сетки страниц кабинета
+
+.stats {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 20px;
+
+  @include up($bp-xl) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  @include down(380px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Основная колонка + правая панель (как в макетах)
+.columns {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+
+  @include up($bp-xl) {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+}
+
+.columnsWide {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+
+  @include up($bp-lg) {
+    grid-template-columns: 340px minmax(0, 1fr);
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.link {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 14px;
+  background: none;
+  border: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Строка «название — значение» в боковых карточках
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: 14px;
+  color: var(--text-muted);
+
+  strong {
+    color: var(--text);
+    font-weight: 800;
+    text-align: right;
+  }
+}
+
+.estimated {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--warning-text);
+}

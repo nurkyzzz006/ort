@@ -1,6 +1,6 @@
-import SideBar from '@/components/layout/side-bar/SideBar';
-import React from 'react';
+import { redirect } from "next/navigation";
 
-const page = () => <SideBar/>
+// /dashboard → кабинет (после входа пользователь попадает сюда)
+const page = () => redirect("/dashboard/kabinet");
 
 export default page;

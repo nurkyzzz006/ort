@@ -1,0 +1,74 @@
+@use "../../styles/mixins" as *;
+
+.card {
+  @include card;
+  min-width: 0;
+}
+
+.pad_md {
+  padding: 20px;
+
+  @include up($bp-md) {
+    padding: 22px 24px;
+  }
+}
+
+.pad_lg {
+  padding: 24px;
+
+  @include up($bp-md) {
+    padding: 28px 32px;
+  }
+}
+
+.pad_none {
+  padding: 0;
+  overflow: hidden;
+}
+
+.default {
+}
+
+.primary {
+  background: var(--primary-soft);
+  border-color: var(--primary-soft-2);
+}
+
+.warning {
+  background: var(--warning-soft);
+  border-color: var(--warning-border);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.pad_none .header {
+  padding: 20px 22px 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}

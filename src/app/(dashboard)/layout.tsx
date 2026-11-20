@@ -1,17 +1,10 @@
-import SideBar from "@/components/layout/side-bar/SideBar";
+import DashboardShell from "@/components/layout/dashboard/DashboardShell";
 import React, { FC, ReactNode } from "react";
 
 interface ILayout {
   children: ReactNode;
 }
 
-const layout: FC<ILayout> = ({ children }) => {
-  return (
-    <div>
-      <SideBar />
-      <main>{children}</main>
-    </div>
-  );
-};
+const layout: FC<ILayout> = ({ children }) => <DashboardShell>{children}</DashboardShell>;
 
 export default layout;

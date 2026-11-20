@@ -1,0 +1,311 @@
+@use "../../../styles/mixins" as *;
+
+// Стили админ-панели (поверх общих roles.module.scss)
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.field,
+.fieldWide {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  > span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: 14px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+    }
+  }
+
+  textarea {
+    min-height: 96px;
+    padding: 10px 12px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+}
+
+.fieldWide {
+  @include up($bp-md) {
+    grid-column: 1 / -1;
+  }
+}
+
+.full {
+  @include up($bp-md) {
+    grid-column: 1 / -1;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 20px 8px;
+
+  select,
+  input {
+    min-height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.select {
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ok {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--success-text);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger-text);
+}
+
+.muted {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.json {
+  max-height: 320px;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+// ── Повторяющиеся строки (варианты ответа, разделы, точки шкалы) ──
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rowLine {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+
+  input[type="text"],
+  input[type="number"],
+  input:not([type]),
+  select {
+    min-height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 14px;
+    min-width: 0;
+  }
+}
+
+.rowLineWide {
+  @extend .rowLine;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) auto;
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+
+  &:hover {
+    color: var(--danger-text);
+    border-color: var(--danger-border);
+  }
+}
+
+.correct {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+
+  input {
+    accent-color: var(--success);
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// ── Детали вопроса ──
+.stem {
+  font-weight: 700;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-bottom: 12px;
+}
+
+.options {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+
+  li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+  }
+
+  b {
+    display: grid;
+    place-items: center;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--bg-subtle);
+    font-size: 12px;
+  }
+}
+
+.optCorrect {
+  border-color: var(--success-border) !important;
+  background: var(--success-soft);
+}
+
+.history {
+  list-style: none;
+  font-size: 13px;
+
+  li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.problems {
+  margin-top: 8px;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--danger-text);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+
+    input {
+      accent-color: var(--primary);
+    }
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.rowActive {
+  background: var(--primary-soft) !important;
+}
+
+.treeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+
+  > span {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.nested {
+  padding-left: 18px;
+}
+
+.inactive {
+  opacity: 0.55;
+}

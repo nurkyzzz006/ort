@@ -1,0 +1,367 @@
+@use "../../../styles/mixins" as *;
+
+.shell {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 200;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+
+  &:focus {
+    left: 8px;
+  }
+}
+
+// ── Сайдбар ──
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 16px 18px;
+  background:
+    radial-gradient(120% 50% at 100% 35%, var(--sidebar-glow) 0%, transparent 60%),
+    var(--sidebar-bg);
+  color: var(--sidebar-text);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+
+  @include up($bp-lg) {
+    transform: none;
+  }
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+  box-shadow: 20px 0 50px rgba(0, 0, 0, 0.35);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  border: none;
+  background: rgba(2, 6, 23, 0.5);
+
+  @include up($bp-lg) {
+    display: none;
+  }
+}
+
+.sidebarLogo {
+  padding: 0 6px 24px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 46px;
+    padding: 0 12px;
+    border-radius: var(--radius);
+    color: var(--sidebar-text);
+    font-size: 14.5px;
+    font-weight: 600;
+    transition: background-color 0.18s ease, color 0.18s ease;
+
+    &:hover {
+      background: var(--sidebar-hover);
+      color: #fff;
+    }
+  }
+
+  .active {
+    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+
+    .menuIcon {
+      color: #fff;
+    }
+
+    .counter {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+  }
+}
+
+.menuTitle {
+  margin: 18px 12px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sidebar-muted);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.menuIcon {
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  color: #94a3b8;
+}
+
+.menuLabel {
+  flex: 1;
+  min-width: 0;
+  @include truncate;
+}
+
+.counter {
+  min-width: 24px;
+  height: 22px;
+  padding: 0 7px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  margin-top: 16px;
+  padding: 0 12px;
+  border: 1px solid var(--sidebar-border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--sidebar-text);
+  font-weight: 600;
+  transition: 0.18s ease;
+
+  svg {
+    font-size: 18px;
+  }
+
+  &:hover:not(:disabled) {
+    background: rgba(248, 113, 113, 0.12);
+    color: #fecaca;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+// ── Основная часть ──
+.body {
+  min-width: 0;
+
+  @include up($bp-lg) {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--topbar-height);
+  padding: 0 16px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--border);
+
+  @include up($bp-md) {
+    padding: 0 32px;
+  }
+}
+
+.burger {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 20px;
+
+  @include up($bp-lg) {
+    display: none;
+  }
+}
+
+.topbarInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.goalChip {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 600;
+  @include truncate;
+
+  @include up($bp-md) {
+    display: inline-flex;
+  }
+
+  &:hover {
+    border-color: var(--border-strong);
+  }
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.roleSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 4px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-muted);
+
+  select {
+    height: 100%;
+    max-width: 150px;
+    padding: 0 6px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    box-shadow: var(--focus-ring);
+  }
+}
+
+.streak {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--warning-border);
+  background: var(--warning-soft);
+  color: var(--warning-text);
+  font-size: 14px;
+  font-weight: 700;
+
+  @include up($bp-sm) {
+    display: inline-flex;
+  }
+}
+
+// На узких экранах прячем переключатель темы — он есть в настройках
+@include down($bp-sm) {
+  .topbarActions > button:not(.avatar) {
+    display: none;
+  }
+
+  .topbarActions {
+    gap: 6px;
+  }
+
+  .roleSwitch select {
+    max-width: 86px;
+  }
+}
+
+.profile {
+  position: relative;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.profileMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 240px;
+  padding: 8px;
+  @include card;
+  box-shadow: var(--shadow-lg);
+}
+
+.profileHead {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+
+  strong {
+    font-size: 14px;
+  }
+
+  span {
+    font-size: 13px;
+    color: var(--text-muted);
+    @include truncate;
+  }
+}
+
+.main {
+  padding: 24px 16px 48px;
+  max-width: 1480px;
+
+  @include up($bp-md) {
+    padding: 32px 32px 56px;
+  }
+}

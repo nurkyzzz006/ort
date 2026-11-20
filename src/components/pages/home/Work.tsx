@@ -1,55 +1,29 @@
-
+"use client";
+import { useT } from "@/i18n";
 import scss from "./Work.module.scss";
 
+/** «Кантип иштейт» — четыре шага цикла */
 const Work = () => {
+  const t = useT();
+  const w = t.landing.how;
+
   return (
-    <div id={scss.Work}>
+    <section id="how" className={scss.section}>
       <div className="container">
-        <div className={scss.content}>
-          <h1>Кантип иштейт</h1>
-          <p>
-            Төрт кадамдан турган цикл: диагностика - практика -
-            каталарды талдоо - интервалдык кайталоо
-          </p>
+        <h2 className={scss.title}>{w.title}</h2>
+        <p className={scss.lead}>{w.lead}</p>
 
-          <div className={scss.interval}>
-            <div className={scss.interval_card}>
-              <span className={scss.number}>1</span>
-              <h2>Диагностика</h2>
-              <p>
-                Тесттин башталышында сиздин билим деңгээлиңизди аныктоо
-                үчүн диагностикадан өтөсүз.
-              </p>
-            </div>
-
-            <div className={scss.interval_card}>
-              <span className={scss.number}>2</span>
-              <h2>Күнүмдүк план</h2>
-              <p>
-                Duo карточкалар, алсыз темалар жана бош убакыт боюнча план.
-              </p>
-            </div>
-
-            <div className={scss.interval_card}>
-              <span className={scss.number}>3</span>
-              <h2>Практика жана тест</h2>
-              <p>
-                Ар бир ката журналга түшүп, дароо түшүндүрмө берилет.
-              </p>
-            </div>
-
-            <div className={scss.interval_card}>
-              <span className={scss.number}>4</span>
-              <h2>Кайталоо</h2>
-              <p>
-                Smart Review 1, 3, 7, 14, 30 күндөн кийин кайталоо
-                менен билим бекемделет.
-              </p>
-            </div>
-          </div>
-        </div>
+        <ol className={scss.steps}>
+          {w.steps.map((step, i) => (
+            <li key={step.title} className={scss.step}>
+              <span className={scss.number}>{i + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))}
+        </ol>
       </div>
-    </div>
+    </section>
   );
 };
 
